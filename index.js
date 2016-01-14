@@ -4,9 +4,7 @@ function FormConstructor(){
 
 window.FormConstructor = FormConstructor;
 
-FormConstructor.prototype = {
-    constructor: FormConstructor.constructor,
-    saveBlob: (function(){
+FormConstructor.saveBlob = (function(){
         var a ;
         return function (blob, fileName) {
             if(!a){
@@ -24,12 +22,12 @@ FormConstructor.prototype = {
                 document.body.removeChild(a);    
             },0);
         };
-    })(),
-    saveText: function(text,fileName){
+    })();
+FormConstructor.saveText = function(text,fileName){
         var blob = new Blob([text], {type: 'text/plain'});
         this.saveBlob(blob,fileName)
-    },
-    loadFile: function(file){
+    };
+FormConstructor.loadFile = function(file){
         var fr = new FileReader();
         var res = $.Deferred();
         fr.onload = function(e){
@@ -37,7 +35,11 @@ FormConstructor.prototype = {
         };
         fr.readAsText(file);
         return res;
-    },
+    };
+    
+
+FormConstructor.prototype = {
+    constructor: FormConstructor.constructor,
     add: function(name, value) {
         var self = this;
         var input = this.dom.form.find('input[name="' + name + '"]');
