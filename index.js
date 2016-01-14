@@ -1,5 +1,5 @@
 function FormConstructor(){
-    
+    return this.initialize.apply(this,arguments);
 }
 
 window.FormConstructor = FormConstructor;
