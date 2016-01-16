@@ -5,20 +5,19 @@ function FormConstructor(){
 window.FormConstructor = FormConstructor;
 
 FormConstructor.saveBlob = function (blob, filename) {
-        if(window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveBlob(blob, filename);
-        }else{
-            var a = document.createElement("a");
-            var url = window.URL.createObjectURL(blob);
-            
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);  
-            window.URL.revokeObjectURL(url);
-        }
-    };
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }else{
+        var a = document.createElement("a");
+        var url = window.URL.createObjectURL(blob);
+        
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);  
+        window.URL.revokeObjectURL(url);
+    }
 };
 FormConstructor.saveText = function(text,fileName){
         var blob = new Blob([text], {type: 'text/plain'});
