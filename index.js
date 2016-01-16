@@ -16,7 +16,10 @@ FormConstructor.saveBlob = function (blob, filename) {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);  
-        window.URL.revokeObjectURL(url);
+        setTimeout(function(){
+            window.URL.revokeObjectURL(url);    
+        },30000);
+        
     }
 };
 FormConstructor.saveText = function(text,fileName){
