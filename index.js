@@ -4,25 +4,22 @@ function FormConstructor(){
 
 window.FormConstructor = FormConstructor;
 
-FormConstructor.saveBlob = (function(){
-        var a ;
-        return function (blob, fileName) {
-            if(!a){
-                a = document.createElement("a");
-                a.style = "display: none";
-                a.innerHTML = "someLink";
-            }
+FormConstructor.saveBlob = function (blob, filename) {
+        if(window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveBlob(blob, filename);
+        }else{
+            var a = document.createElement("a");
             var url = window.URL.createObjectURL(blob);
-            document.body.appendChild(a);
+            
             a.href = url;
-            a.download = fileName;
+            a.download = filename;
+            document.body.appendChild(a);
             a.click();
-            setTimeout(function(){
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);    
-            },0);
-        };
-    })();
+            document.body.removeChild(a);  
+            window.URL.revokeObjectURL(url);
+        }
+    };
+};
 FormConstructor.saveText = function(text,fileName){
         var blob = new Blob([text], {type: 'text/plain'});
         this.saveBlob(blob,fileName)
